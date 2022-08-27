@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpComposerExtensionStubsInspection */
 
 declare(strict_types=1);
 
@@ -42,6 +43,7 @@ final class MemcachedRateLimiter extends ConfigurableRateLimiter implements Rate
         $this->updateCounter($limitKey);
     }
 
+    /** @noinspection DuplicatedCode */
     public function limitSilently(string $identifier): Status
     {
         $limitKey = $this->limitKey($identifier);

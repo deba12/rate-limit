@@ -20,38 +20,59 @@ class Rate
         $this->interval = $interval;
     }
 
-    public static function perSecond(int $operations)
-    {
+    /**
+     * @param int $operations
+     * @return Rate
+     */
+    public static function perSecond(int $operations): Rate {
         return new static($operations, 1);
     }
 
-    public static function perMinute(int $operations)
-    {
+    /**
+     * @param int $operations
+     * @return Rate
+     */
+    public static function perMinute(int $operations): Rate {
         return new static($operations, 60);
     }
 
-    public static function perHour(int $operations)
-    {
+    /**
+     * @param int $operations
+     * @return Rate
+     */
+    public static function perHour(int $operations): Rate {
         return new static($operations, 3600);
     }
 
-    public static function perDay(int $operations)
-    {
+    /**
+     * @param int $operations
+     * @return Rate
+     */
+    public static function perDay(int $operations): Rate {
         return new static($operations, 86400);
     }
 
-    public static function custom(int $operations, int $interval)
-    {
+    /**
+     * @param int $operations
+     * @param int $interval
+     * @return Rate
+     */
+    public static function custom(int $operations, int $interval): Rate {
         return new static($operations, $interval);
     }
 
-    public function getOperations(): int
-    {
+    /**
+     * @return int
+     */
+    public function getOperations(): int {
         return $this->operations;
     }
 
-    public function getInterval(): int
-    {
+    /**
+     * @return int
+     */
+    public function getInterval(): int {
         return $this->interval;
     }
+
 }

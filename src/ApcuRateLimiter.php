@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpComposerExtensionStubsInspection */
 
 declare(strict_types=1);
 
@@ -45,6 +46,7 @@ final class ApcuRateLimiter extends ConfigurableRateLimiter implements RateLimit
         $this->updateCounter($limitKey);
     }
 
+    /** @noinspection DuplicatedCode */
     public function limitSilently(string $identifier): Status
     {
         $limitKey = $this->limitKey($identifier);
@@ -83,6 +85,7 @@ final class ApcuRateLimiter extends ConfigurableRateLimiter implements RateLimit
         $current = $this->updateCounter($limitKey);
 
         if ($current === 1) {
+            /** @noinspection UnusedFunctionResultInspection */
             apcu_store($timeKey, time(), $this->rate->getInterval());
         }
 

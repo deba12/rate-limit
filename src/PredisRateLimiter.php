@@ -1,4 +1,6 @@
 <?php
+/** @noinspection PhpUndefinedNamespaceInspection */
+/** @noinspection PhpUndefinedClassInspection */
 
 declare(strict_types=1);
 
@@ -55,6 +57,7 @@ final class PredisRateLimiter extends ConfigurableRateLimiter implements RateLim
 
     private function key(string $identifier): string
     {
+        /** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
         return "{$this->keyPrefix}{$identifier}:{$this->rate->getInterval()}";
     }
 
