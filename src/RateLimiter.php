@@ -12,4 +12,5 @@ interface RateLimiter
      * @throws LimitExceeded
      */
     public function limit(string $identifier): void;
+    public function getRemainingAttempts(string $identifier): int;
 }

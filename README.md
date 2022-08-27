@@ -66,6 +66,20 @@ $container->set('rate_limiter.api', new RedisRateLimiter(Rate::perSecond(10), $c
 $container->set('rate_limiter.videos', new RedisRateLimiter(Rate::perDay(5), $container->get('redis')));
 ```
 
+**Get current remaining attempts**
+
+```php
+use RateLimit\Exception\LimitExceeded;
+use RateLimit\Rate;
+use RateLimit\RedisRateLimiter;
+use Redis;
+
+$rateLimiter = new RedisRateLimiter(Rate::perMinute(100), new Redis());
+
+$apiKey = 'abc123';
+echo $rateLimiter->getRemainingAttempts($apiKey); //100
+```
+
 ## Supported drivers
 
 - [Redis](src/RedisRateLimiter.php)

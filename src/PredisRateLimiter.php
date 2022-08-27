@@ -55,6 +55,15 @@ final class PredisRateLimiter extends ConfigurableRateLimiter implements RateLim
         );
     }
 
+    /**
+     * @param string $identifier
+     * @return int
+     */
+    public function getRemainingAttempts(string $identifier): int {
+        $key = $this->key($identifier);
+        return $this->getCurrent($key);
+    }
+
     private function key(string $identifier): string
     {
         /** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */

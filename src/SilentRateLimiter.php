@@ -7,4 +7,5 @@ namespace RateLimit;
 interface SilentRateLimiter
 {
     public function limitSilently(string $identifier): Status;
+    public function getRemainingAttempts(string $identifier): int;
 }
