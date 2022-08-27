@@ -65,12 +65,21 @@ final class ApcuRateLimiter extends ConfigurableRateLimiter implements RateLimit
         );
     }
 
-    /**
-     * @param string $identifier
-     * @return int
-     */
-    public function getRemainingAttempts(string $identifier): int {
-        return $this->getCurrent($identifier);
+    /** @noinspection DuplicatedCode */
+    public function current(string $identifier): Status {
+
+        $limitKey = $this->limitKey($identifier);
+        $timeKey = $this->timeKey($identifier);
+
+        $current = $this->getCurrent($limitKey);
+
+        return Status::from(
+            $identifier,
+            $current,
+            $this->rate->getOperations(),
+            time() + max(0, $this->rate->getInterval() - $this->getElapsedTime($timeKey))
+        );
+
     }
 
     private function limitKey(string $identifier): string

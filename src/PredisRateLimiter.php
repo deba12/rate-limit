@@ -57,11 +57,21 @@ final class PredisRateLimiter extends ConfigurableRateLimiter implements RateLim
 
     /**
      * @param string $identifier
-     * @return int
+     * @return Status
      */
-    public function getRemainingAttempts(string $identifier): int {
+    public function current(string $identifier): Status {
+
         $key = $this->key($identifier);
-        return $this->getCurrent($key);
+
+        $current = $this->getCurrent($key);
+
+        return Status::from(
+            $identifier,
+            $current,
+            $this->rate->getOperations(),
+            time() + $this->ttl($key)
+        );
+
     }
 
     private function key(string $identifier): string

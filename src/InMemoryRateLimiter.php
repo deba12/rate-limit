@@ -37,13 +37,19 @@ final class InMemoryRateLimiter extends ConfigurableRateLimiter implements RateL
         );
     }
 
-    /**
-     * @param string $identifier
-     * @return int
-     */
-    public function getRemainingAttempts(string $identifier): int {
+    public function current(string $identifier): Status {
+
         $key = $this->key($identifier);
-        return $this->hit($key);
+
+        $current = $this->store[$key]['current'];
+
+        return Status::from(
+            $identifier,
+            $current,
+            $this->rate->getOperations(),
+            $this->store[$key]['reset_time']
+        );
+
     }
 
     private function key(string $identifier): string

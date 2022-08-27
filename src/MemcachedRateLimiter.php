@@ -64,11 +64,22 @@ final class MemcachedRateLimiter extends ConfigurableRateLimiter implements Rate
 
     /**
      * @param string $identifier
-     * @return int
+     * @return Status
      */
-    public function getRemainingAttempts(string $identifier): int {
+    public function current(string $identifier): Status {
+
         $limitKey = $this->limitKey($identifier);
-        return $this->getCurrent($limitKey);
+        $timeKey = $this->timeKey($identifier);
+
+        $current = $this->getCurrent($limitKey);
+
+        return Status::from(
+            $identifier,
+            $current,
+            $this->rate->getOperations(),
+            time() + max(0, $this->rate->getInterval() - $this->getElapsedTime($timeKey))
+        );
+
     }
 
     private function limitKey(string $identifier): string
